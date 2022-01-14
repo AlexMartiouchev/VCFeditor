@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>CHROM</th>
+        <th>POS</th>
+        <th>ID</th>
+        <th>REF</th>
+        <th>ALT</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for variant in variants %}
+      <tr>
+          <td>{{ variant.CHROM }}</td>
+          <td>{{ variant.POS }}</td>
+          <td>{{ variant.ID }}</td>
+          <td>{{ variant.REF }}</td>
+          <td>{{ variant.ALT }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if variants.has_other_pages %}
+  <ul class="pagination">
+    {% if variants.has_previous %}
+      <li><a href="?page={{ variants.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in variants.paginator.page_range %}
+      {% if variants.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if variants.has_next %}
+      <li><a href="?page={{ variants.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
